@@ -413,6 +413,9 @@ class DMPLRP(GraphAdjModelV2):
             g_v_mask = self.refine_node_weights(g_v_mask)
             g_v_output = split_and_batchify_graph_feats(g_v_output, g_v_len, pre_pad=True)[0]
             g_v_output = g_v_output.masked_fill_(~(g_v_mask), 0)
+        else:
+            p_v_output = None
+            g_v_output = None
 
         if self.edge_pred:
             p_u, p_v, p_e = pattern.all_edges(form="all", order="eid")
