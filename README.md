@@ -14,7 +14,7 @@ We propose dual message passing neural networks (DMPNNs) to enhance the substruc
 * pandas
 * scipy
 * numba >= 0.54.0
-* python-igraph
+* python-igraph == 0.9.11
 * torch >= 1.7.0
 * dgl >= 0.6.0
 
