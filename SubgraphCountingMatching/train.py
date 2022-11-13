@@ -608,7 +608,6 @@ def train_epoch(model, optimizer, scheduler, data_type, data_loader, device, con
         counts = counts.float().unsqueeze(-1).to(device)
 
         if p_perm_pool is None:
-            # pred_c, (pred_v, pred_e), ((p_v_mask, p_e_mask), (g_v_mask, g_e_mask)) = model(pattern, graph)
             output = model(pattern, graph)
         else:
             p_perm_pool = p_perm_pool.to(device)
@@ -617,10 +616,6 @@ def train_epoch(model, optimizer, scheduler, data_type, data_loader, device, con
             g_perm_pool = g_perm_pool.to(device)
             g_n_perm_matrix = g_n_perm_matrix.to(device)
             g_e_perm_matrix = g_e_perm_matrix.to(device)
-            # pred_c, (pred_v, pred_e), ((p_v_mask, p_e_mask), (g_v_mask, g_e_mask)) = model(
-            #     pattern, p_perm_pool, p_n_perm_matrix, p_e_perm_matrix,
-            #     graph, g_perm_pool, g_n_perm_matrix, g_e_perm_matrix
-            # )
             output = model(
                 pattern, p_perm_pool, p_n_perm_matrix, p_e_perm_matrix,
                 graph, g_perm_pool, g_n_perm_matrix, g_e_perm_matrix
@@ -779,8 +774,6 @@ def train_epoch(model, optimizer, scheduler, data_type, data_loader, device, con
                 )
             )
 
-        # del pred_c, pred_v, pred_e
-        # del p_v_mask, p_e_mask, g_v_mask, g_e_mask
         del output
         del batch
         del ids, pattern, graph, counts, node_weights, edge_weights
@@ -927,7 +920,6 @@ def evaluate_epoch(model, data_type, data_loader, device, config, epoch, logger=
 
             if p_perm_pool is None:
                 st = time.time()
-                # pred_c, (pred_v, pred_e), ((p_v_mask, p_e_mask), (g_v_mask, g_e_mask)) = model(pattern, graph)
                 output = model(pattern, graph)
                 et = time.time()
             else:
@@ -938,10 +930,6 @@ def evaluate_epoch(model, data_type, data_loader, device, config, epoch, logger=
                 g_n_perm_matrix = g_n_perm_matrix.to(device)
                 g_e_perm_matrix = g_e_perm_matrix.to(device)
                 st = time.time()
-                # pred_c, (pred_v, pred_e), ((p_v_mask, p_e_mask), (g_v_mask, g_e_mask)) = model(
-                #     pattern, p_perm_pool, p_n_perm_matrix, p_e_perm_matrix,
-                #     graph, g_perm_pool, g_n_perm_matrix, g_e_perm_matrix
-                # )
                 output = model(
                     pattern, p_perm_pool, p_n_perm_matrix, p_e_perm_matrix,
                     graph, g_perm_pool, g_n_perm_matrix, g_e_perm_matrix
@@ -1064,8 +1052,6 @@ def evaluate_epoch(model, data_type, data_loader, device, config, epoch, logger=
                 )
             )
 
-        # del pred_c, pred_v, pred_e
-        # del p_v_mask, p_e_mask, g_v_mask, g_e_mask
         del output
         del batch
         del ids, pattern, graph, counts, node_weights, edge_weights
